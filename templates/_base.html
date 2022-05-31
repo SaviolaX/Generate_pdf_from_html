@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="header-block">
+            <div class="header-block-company">
+                <a href="{% url 'index' %}">RentAutoCompany</a>
+            </div>
+        </div>
+        <div class="header-block">
+            <div class="header-block-menu">
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'list_documents' %}">All forms</a>
+            </div>
+        </div>
+        <div class="header-block">
+            <div class="header-block-auth">
+                {% if request.user.is_authenticated %}
+                    <span style="margin-right: 10px;">Logged in as: {{ user }}</span>
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'signup' %}">Register</a>
+                    <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+    {% block content %}
+
+    {% endblock %}
+    </div>
+
+    <div class="footer">
+        <p>Created by: SB</p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    Create document
+{% endblock %}
+
+{% block content %}
+        <h1>Create form</h1>
+        <br>
+        <form action="" method="post">
+            {% csrf_token %}
+            <table style="margin-left: auto; margin-right: auto;">
+                {% for field in form %}
+                    <tr>
+                        <td style="float: right; margin-right: 10px;">{{ field.label }}:</td>
+                        <td>{{ field }}</td>
+                    </tr>
+                {% endfor %}
+            </table>          
+            <br>
+            <button type="submit">Create</button>
+        </form>
+{% endblock %}

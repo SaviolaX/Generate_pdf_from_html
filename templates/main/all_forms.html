@@ -1,0 +1,62 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    Documents
+{% endblock %}
+
+{% block content %}
+        <h1>All forms</h1>
+        <br>
+        {% if documents.count != 0 %}
+            <div class="all-forms-titles">  
+                <div class="all-forms-title-block-id">
+                    <p>#</p>
+                </div>  
+                <div class="all-forms-title-block">
+                    <p>Name</p>
+                </div> 
+                <div class="all-forms-title-block">
+                    <p>Car</p>
+                </div> 
+                <div class="all-forms-title-block">
+                    <p>Period</p>
+                </div> 
+                <div class="all-forms-title-block">
+                    <p>Status</p>
+                </div> 
+            </div>
+            <hr>
+
+            {% for document in documents %}
+                <a class="form-link" href="{% url 'document_page' document.id %}">
+                    <div class="all-forms-body">  
+                        <div class="all-forms-body-block-id">
+                            <p>{{ forloop.counter }}</p>
+                        </div>  
+                        <div class="all-forms-body-block">
+                            <p>{{ document.client_full_name }}</p>
+                        </div> 
+                        <div class="all-forms-body-block">
+                            <p>{{ document.car.car_model }}</p>
+                        </div> 
+                        <div class="all-forms-body-block">
+                            <p>{{ document.renting_date_from }} - {{ document.renting_date_to }}</p>
+                        </div> 
+                        <div class="all-forms-body-block">
+                                <p>{{ document.status }}</p>
+                        </div>
+                        {% if document.status == 'In progress' %}
+                            <div style="width: 10px; background-color: blue;"></div>
+                        {% elif document.status == 'Finished' %}
+                            <div style="width: 10px; background-color: green;"></div>
+                        {% elif document.status == 'Expired' %}
+                            <div style="width: 10px; background-color: red;"></div>
+                        {% endif %}
+
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}  
+                <h3>No documents yet....</h3>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    Document {{ document.pk }}
+{% endblock %}
+
+{% block content %}
+
+        <div class="button-in-doc-page">
+            <a style=" background-color: lightskyblue; padding: 5px; border-radius: 10px;" 
+            href="{% url 'document_update' document.pk %}">Edit</a>
+        </div>
+
+        <div class="button-in-doc-page">
+            <a style=" background-color: lightcoral; padding: 5px; border-radius: 10px;" 
+            href="{% url 'document_delete' document.pk %}">Delete</a>
+        </div>
+
+        <div class="button-in-doc-page">
+            <a style=" background-color: lightgreen; padding: 5px; border-radius: 10px;" 
+            href="{% url 'document_pdf' document.pk %}">Generate PDF</a>
+        </div>
+
+        <div class="button-in-doc-page" style="float: right;">
+            <a style=" background-color: lightseagreen; padding: 5px; border-radius: 10px;" 
+            href="{% url 'document_finish' document.pk %}">Finish agreement</a>
+        </div>
+
+        <br>
+        <h1>{{ document.company }}</h1>
+        <br>
+        <h3>Agreement</h3>
+        <br>
+        <hr>
+        <br>
+        <div class="form-page-body">
+            <ul>
+                <li><strong>Company:</strong> {{ document.company }}</li>
+                <li><strong>Client name:</strong> {{ document.client_full_name }}</li>
+                <li><strong>Car model:</strong> {{ document.car.car_model }}</li>
+                <li><strong>Date from:</strong> {{ document.renting_date_from }}</li>
+                <li><strong>Date to:</strong> {{ document.renting_date_to }}</li>
+            </ul>
+            <br>
+            <p>
+                Current document is an agreement between <strong><u>{{ document.client_full_name }}</u></strong> and 
+                <strong><u>{{ document.company }}</u></strong> about renting a car <strong><u>{{ document.car.car_model }}</u></strong> for the period 
+                from <strong><u>{{ document.renting_date_from }}</u></strong> to <strong><u>{{ document.renting_date_to }}</u></strong>.
+            </p>
+            <h4 style="text-align:center; margin:10px 0;"><u>Main rules:</u></h4>
+            <p>
+                Due to this agreement client gets the car on rental term and 
+                has to pay <u>${{ document.car.rent_cost_per_day }}/day</u> for using the auto.
+            </p>
+            <br>
+            <p>
+                Customer must return the car in rental perion in allowed 
+                conditions. If the client does not return the car at the end of 
+                the rental period, he receives a penalty of $100 for each 
+                subsequent day after the end of the rental period. In 3 days 
+                after finishing renting period if client did not have a contact
+                with us the company reserves the right to contact the police 
+                due to car theft.
+            </p>
+            <br>
+            <p>
+                The client and the car are insured in the company 
+                "Bla Bla Insurance"
+            </p>
+            <br><br>
+        </div>
+
+        <hr>
+        <div id="document-table">
+            <table>
+                <tr>
+                    <th>Car</th>
+                    <th>Car number</th>
+                    <th>Total days</th>
+                    <th>per/day, $</th>
+                    <th>Total sum, $</th>
+                </tr>
+                <tr>
+                    <td>{{ document.car.car_model }}</td>
+                    <td>{{ document.car.car_number }}</td>
+                    <td>{{ document.get_total_rent_days }}</td>
+                    <td>{{ document.car.rent_cost_per_day }}</td>
+                    <td>{{ document.get_total_rent_price }}</td>
+                </tr>
+            </table>
+        </div>
+        <hr>
+        <br>
+        <br>
+
+        <div style="display: flex; justify-content: space-between;">
+            <div style="display: inline-block;">
+                <p>Date: {{ document.timestamp }}</p>
+            </div>
+            <div style="display: inline-block;">
+                <p style="float: right;">Signature: _______</p>
+            </div>
+        </div>
+{% endblock %}
